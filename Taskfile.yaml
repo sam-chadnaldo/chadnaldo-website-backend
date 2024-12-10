@@ -1,0 +1,25 @@
+version: "3"
+
+tasks:
+  run:
+    desc: Run app
+    cmds:
+      - go run ./cmd/main.go --config ./config/local.yaml
+
+  migrate:up:
+    desc: Run database migrations
+    cmds:
+      - migrate -path ./migrations -database "postgres://postgres:1234567890@localhost:5432/postgres?sslmode=disable" up
+
+  migrate:down:
+    desc: Rollback the last database migration
+    S: '{{.S | default "N"}}'
+    cmds:
+      - migrate -path ./migrations -database "postgres://postgres:1234567890@localhost:5432/postgres?sslmode=disable" down {{.S}}
+
+  migrate:force:
+    vars:
+      V: "{{.V}}"
+    desc: Force migration
+    cmds:
+      - migrate -path ./migrations -database "postgres://postgres:1234567890@localhost:5432/postgres?sslmode=disable" force {{.V}}

@@ -1,0 +1,10 @@
+env: "local"
+
+http:
+  port: 8080
+
+coingate:
+  base_url: "example.com"
+  test_url: "example.com"
+  timeout: 3s
+  retries_count: 5
